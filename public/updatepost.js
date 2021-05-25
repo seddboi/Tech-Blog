@@ -5,6 +5,7 @@ document.querySelector('#edit-post-button').addEventListener('click', editPost);
 // attaches to deleet button and calls delete function
 document.querySelector('#delete-post-button').addEventListener('click', deletePost);
 
+// meant to update/create post in place of another
 async function createPost(event) {
     event.preventDefault();
 
@@ -47,7 +48,7 @@ async function editPost(event) {
     console.log(post_title, post_body);
     document.location.replace(`/edit/${post_id}`);
 
-    
+
 };
 
 async function deletePost(event) {
