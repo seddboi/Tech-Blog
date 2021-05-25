@@ -30,7 +30,18 @@ async function selectLogin(event) {
 };
 
 async function selectLogout(event) {
+    const logoutResponse = await fetch('/api/users/logout', {
+        method: 'POST',
+        headers: {
+            "Content-Type":'application/json'
+        }
+    });
 
+    if(response.ok) {
+        document.location.replace('/');
+    } else {
+        alert('Failed to log in... please try again.')
+    }
 };
 
 // this controls the signup and login feature
