@@ -1,4 +1,7 @@
-const newFormHandler = async (event) => {
+// adjust query selctor
+document.querySelector('#new-post-button').addEventListener('click', createPostHandler);
+
+async function formHandler(event) {
     event.preventDefault();
 
     // adjust query selctors
@@ -24,7 +27,5 @@ const newFormHandler = async (event) => {
         }
     }
   
-}
+};
 
-// adjust query selctor
-document.querySelector().addEventListener('click', createPostHandler);
