@@ -1,12 +1,12 @@
 // adjust query selctor
-document.querySelector('#new-post-button').addEventListener('click', createPostHandler);
+document.querySelector('#submit-new-post').addEventListener('click', createNewPost);
 
-async function formHandler(event) {
+async function createNewPost(event) {
     event.preventDefault();
 
     // adjust query selctors
-    const post_title = document.querySelector().value.trim();
-    const post_content = document.querySelector().value.trim();
+    const post_title = document.querySelector('#new-title').value.trim();
+    const post_content = document.querySelector('new-content').value.trim();
 
     if (body) {
         const response = await fetch(`/api/posts`, {
