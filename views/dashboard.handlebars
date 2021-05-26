@@ -1,0 +1,10 @@
+<div class='mb-10'>
+    <button class='button secondary'><a href='/post'>Create New Post</a></button>
+</div>
+
+<h3 class='mb-5'>My Posts</h3>
+<div>
+    {{#each posts as |post| }}
+        {{> post-info post}}
+    {{/each}}
+</div>
