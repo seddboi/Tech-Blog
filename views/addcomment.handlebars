@@ -1,0 +1,30 @@
+<section class='card p-10'>
+    <h2 id='post-title' class='post-title'>{{post.title}}</h2>
+    <h4>{{post.user.username}} </h4>
+
+    <section class='container'>
+        <h5 id='post-body' class='post-body'>{{post.body}}</h5>
+    </section>
+
+    {{#if currentUser}}
+    <button id='edit-post-button'>Edit Post</button>
+    <button id='delete-post-button'>Delete Post</button>
+
+    <script src='../public/js/updatepost.js'></script>
+    {{/if}}
+
+</section>
+
+<section id='comment-section'>
+    <form id='comment-section-form'>
+        <input class='p-5 m-10' type='text' label='Reply:' id='comment-content'>
+        <button class='p-5 m-10' id='comment-button'>Submit Comment</button>
+    </form>
+</section>
+
+{{#each post.comments as |Comment|}}
+{{> comment-content Comment}}
+{{/each}}
+
+<script src='../public/js/addcomment.js'></script>
+

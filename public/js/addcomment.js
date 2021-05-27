@@ -11,7 +11,7 @@ async function addComment(event) {
     const comment_content = document.querySelector('#comment-content').value.trim();
 
     // if comment was entered, then it is posted and marked in json
-    if (content_content) {
+    if (comment_content) {
         const response = await fetch('/api/comments',  {
             method: 'POST',
             body: JSON.stringify({
