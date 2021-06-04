@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const {User, Comment, Post} = require('../models');
 
-// create post route
+// add comment route
 router.post('/', (req, res) => {
-    Post.create({
-        title: req.body.title,
-        body: req.body.body,
+    Comment.create({
+        comment_text: req.body.comment_text,
+        post_id: req.body.post_id,
         user_id: req.session.user_id,
     }).then( (data) => {
         res.json(data);
@@ -14,11 +14,10 @@ router.post('/', (req, res) => {
     });
 });
 
-// update post route
+// update comment route
 router.put('/:id', (req, res) => {
-    Post.update({
-        title: req.body.title,
-        body: req.body.body,
+    Comment.update({
+        comment_text: req.body.comment_text,
     },
     {
         where: {
@@ -26,7 +25,7 @@ router.put('/:id', (req, res) => {
         }
     }).then( (data) => {
         if (!data) {
-            res.status(400).json({message: 'There was no post found with this id.'});
+            res.status(400).json({message: 'There was no comment found with this id.'});
         };
         
         res.json(data);
@@ -35,59 +34,56 @@ router.put('/:id', (req, res) => {
     })
 });
 
-// delete post route
+// delete comment route
 router.delete('/:id', (req, res) => {
-    Post.destroy({
+    Comment.destroy({
         where: {
             id: req.params.id,
-        }
+        },
     }).then( (data) => {
         if (!data) {
-            res.status(400).json({message: 'There was no post found witth this id.'})
+            res.status(400).json({message: 'Sorry, there was no comment found with this id.'});
         };
-
+        
+        res.json(data);
+    }).catch( (err) => {
+        res.json(err);
+    })
+});
+// collect all comments route
+router.get('/', (req, res) => {
+    Comment.findAll({
+        attributes: ['id', 'comment_text', 'user_id', 'post_id'],
+        include: {
+            model: User,
+            attributes: ['username'],
+        },
+    }).then( (data) => {
         res.json(data);
     }).catch( (err) => {
         res.status(500).json(err);
     });
 });
 
-// gather all posts
-router.get('/', (req, res) => {
-    User.findAll({
-        attributes: ['id', 'title', 'body', 'user_id'],
-        include: [
-            {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'post_id'],
-            },
-        ],
-    }).then((data) => {
-        res.json(data);
-    }).catch( (err) => {
-        res.status(500).json(err)
-    });
-});
-
-// get ONE post by id
+// get ONE comment by id
 router.get('/:id', (req, res) => {
-    Post.findOne({
+    Comment.findOne({
         where: {
             id: req.params.id,
         },
-        attributes: ['id', 'title', 'body', 'user_id'],
+        attributes: ['id', 'comment_text', 'user_id', 'post_id'],
         include: [
             {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'user-id'],
+                model: User,
+                attributes: ['username'],
             },
-        ]
+        ],
     }).then( (data) => {
         if (!data) {
-            res.status(400).json({message: 'There was no post found with this id.'})
+            res.status(400).json({message:'Sorry, there was no comment found with this id.'})
         };
 
-        res,json(data)
+        res.json(data);
     }).catch( (err) => {
         res.status(500).json(err);
     });

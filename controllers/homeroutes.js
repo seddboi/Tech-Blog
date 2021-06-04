@@ -3,18 +3,21 @@ const sequelize = require('../config/connection');
 
 const {User, Post, Comment} = require('../models');
 
+// logged in home route
 router.get('/login', (req, res) => {
     res.render('login', {
         loggedIn: req.session.loggedIn
     });
 });
 
+// create post home route
 router.get('/post', (req, res) => {
     res.render('create', {
         loggedIn: req.session.loggedIn
     });
 });
 
+// edit post home route
 router.get('/edit/:id', (req, res) => {
     res.render('edit', {
         loggedIn: req.session.loggedIn,
@@ -22,6 +25,7 @@ router.get('/edit/:id', (req, res) => {
     })
 });
 
+// gather all posts home route
 router.get('/', (req, res) => {
     Post.findAll({
         attributes: ["id", "title", "body", "user_id"],
@@ -53,6 +57,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// view one post home route
 router.get('/viewpost/:id', (req, res) => {
     Post.findOne({
         where: {
@@ -88,6 +93,7 @@ router.get('/viewpost/:id', (req, res) => {
     });
 });
 
+// view all posts by ONE user home route
 router.get('/dashboard', (req, res) => {
     Post.findAll({
         where: {
