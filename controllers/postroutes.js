@@ -54,7 +54,7 @@ router.delete('/:id', (req, res) => {
 
 // gather all posts
 router.get('/', (req, res) => {
-    User.findAll({
+    Post.findAll({
         attributes: ['id', 'title', 'body', 'user_id'],
         include: [
             {
